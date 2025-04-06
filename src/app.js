@@ -13,11 +13,25 @@ class IndecisionApp extends React.Component {
   // Lifecycle methods - components that fireup at a different time of components lifecycle
   // Are only available in class base components
   componentDidMount() {
-    console.log('Fetching data');
+    try {
+      const json = localStorage.getItem('options');
+      const options = JSON.parse(json);
+      if (options) {
+        this.setState(() => ({ options }));
+        console.log('Fetching data from localStorage');
+      }
+    } catch (error) {
+      // Do nothing at all      
+    }
   }
 
   componentDidUpdate(prevProps, prevState) {
-    console.log('Saving Data');
+    if (prevState.options.length !== this.state.options.length) {
+      const json = JSON.stringify(this.state.options);
+      localStorage.setItem("options", json);
+
+      console.log('Saving Data to localStorage');
+    }
   }
 
   componentWillUnmount() {
@@ -40,6 +54,7 @@ class IndecisionApp extends React.Component {
     const option = this.state.options[randomNum];
     alert(option);
   }
+
   handleAddOption(option) {
     if (!option) {
       return 'Enter valid value to add item';
@@ -106,6 +121,7 @@ const Options = (props) => {
   return (
     <div>
       <button onClick={props.handleDeleteOptions}>Remove All</button>
+      {props.options.length === 0 && <p>Please add an option to get started!</p>}
       {
         props.options.map((option) => (
           <Option 
@@ -148,6 +164,10 @@ class AddOption extends React.Component {
     const error = this.props.handleAddOption(option);
 
     this.setState(() => ({ error }));
+
+    if (! error) {
+      e.target.elements.option.value = '';
+    }
   }
   render() {
     return (
