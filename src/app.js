@@ -9,9 +9,25 @@ class IndecisionApp extends React.Component {
       options: props.options
     };
   }
+
+  // Lifecycle methods - components that fireup at a different time of components lifecycle
+  // Are only available in class base components
+  componentDidMount() {
+    console.log('Fetching data');
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    console.log('Saving Data');
+  }
+
+  componentWillUnmount() {
+    console.log('Component was deleted from the dom.');
+  }
+
   handleDeleteOptions() {
     this.setState(() => ({ options : [] }));
   }
+  // END Lifecycle methods
 
   handleDeleteOption(optionToRemove) {
     this.setState((prevState) => ({

@@ -26,13 +26,34 @@ var IndecisionApp = function (_React$Component) {
     return _this;
   }
 
+  // Lifecycle methods - components that fireup at a different time of components lifecycle
+  // Are only available in class base components
+
+
   _createClass(IndecisionApp, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      console.log('Fetching data');
+    }
+  }, {
+    key: 'componentDidUpdate',
+    value: function componentDidUpdate(prevProps, prevState) {
+      console.log('Saving Data');
+    }
+  }, {
+    key: 'componentWillUnmount',
+    value: function componentWillUnmount() {
+      console.log('Component was deleted from the dom.');
+    }
+  }, {
     key: 'handleDeleteOptions',
     value: function handleDeleteOptions() {
       this.setState(function () {
         return { options: [] };
       });
     }
+    // END Lifecycle methods
+
   }, {
     key: 'handleDeleteOption',
     value: function handleDeleteOption(optionToRemove) {
